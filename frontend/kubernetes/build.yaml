@@ -1,0 +1,15 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: jib
+  namespace: vertx
+spec:
+  serviceAccountName: knative-build
+  source:
+    git:
+      url: https://github.com/bishoybasily/knative-playground.git
+      revision: master
+  steps:
+    - name: build-and-push
+      image: gcr.io/cloud-builders/mvn
+      args: [ "clean", "compile", "jib:build", "-pl", "backend" ]
